@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="pkg_path" default="$(find lidar2cam_calibration)"/>
+    
+    <node type="rviz" name="rviz" pkg="rviz" args="-d $(arg pkg_path_path)/rviz/1.rviz" output="screen"/>
+    <node type="rqt_reconfigure" name="rqt_reconfigure" pkg="rqt_reconfigure" output="screen"/> 
+
+</launch> 

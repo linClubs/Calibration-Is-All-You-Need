@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+    
+    <arg name="pkg_path" default="$(find lidar2cam_calibration)"/>
+    <param name="pkg_path" type="string" value="$(arg pkg_path)"/>
+    
+    <node pkg="lidar2cam_calibration" name="create_aruco_node" type="create_aruco_node" output="screen"/>
+</launch> 

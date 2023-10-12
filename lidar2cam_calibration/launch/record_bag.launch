@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="file_name" default="default"/>
+    <arg name="bag_dir" default="/media/$(env USER)/Lin/bag"/>
+
+    <!-- <arg name="points_topic" default="/points_raw"/> -->
+    <!-- <arg name="imu_topic" default="/imu/data"/> -->
+    <arg name="rosbag_name" default="$(arg file_name).bag"/>
+    <!-- <arg name="rosbag_topic" default="$(arg imu_topic)_relay /odom_raw $(arg points_topic)_relay"/> -->
+    
+    <arg name="rosbag_topic" default=" /camera/color/camera_info /camera/color/image_raw /velodyne_points"/>
+    <arg name="rosbag_path" default="$(arg bag_dir)/$(arg rosbag_name)"/>
+
+    <!-- <node pkg="topic_tools" type="relay" name="relay_lidar" args="$(arg points_topic) $(arg points_topic)_relay"/>
+    <node pkg="topic_tools" type="relay" name="relay_imu" args="$(arg imu_topic) $(arg imu_topic)_relay"/> -->
+    <node pkg="rosbag" name="record_test" type="record" output="screen" args="$(arg rosbag_topic) -O $(arg rosbag_path)"/>
+    
+</launch>

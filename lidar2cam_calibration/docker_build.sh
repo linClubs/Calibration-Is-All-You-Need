@@ -1,0 +1,1 @@
+docker build -f dockerfile -t ros:1.0 .

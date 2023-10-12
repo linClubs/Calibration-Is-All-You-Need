@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+    
+    <arg name="pkg_path" default="$(find lidar2cam_calibration)"/>
+    <param name="pkg_path" type="string" value="$(arg pkg_path)"/>
+    
+    <node pkg="lidar2cam_calibration" name="estimation_tf_node" type="estimation_tf_node" output="screen"/>
+</launch> 
