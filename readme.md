@@ -1,11 +1,13 @@
 
-# 1 Calibration Is All You Need
+# 1 `Calibration Is All You Need`
+ 
+`This repository contains source code for Multi sensor calibration,including **camera、imu、imu2camera、lidar2cam、camera2camera、imu2lidar**`.
 
-## 1.1 env
+## 1.1 `env`
 [环境构建详细参考](https://github.com/linClubs/Calibration-Is-All-You-Need/blob/main/Thirdparty/install.md)
 
 
-1. dependent install
+1. `dependent install`
 
 + 本机保证`ubuntu-20.04，ros-noetic-desktop-full`完整版就行
 + `ros-noetic-desktop-full`自带 **`eigen-3.3.7, opencv-4.2.0, pcl-1.10`** 
@@ -28,7 +30,7 @@ cd calibration
 ./docker_build.sh
 ~~~
 
-## 1.2 编译calibration功能包
+## 1.2 编译`calibration`功能包
 
 + 下载
 ~~~python
@@ -50,21 +52,20 @@ cd calibration
 
 # 2 相机标定
 
-+ kalibr输出的内参格式为：fx，fy，cx，cy畸变参数为：k1，k2，p1，p2（
-径向畸变参数k1、k2，切向畸变参数p1，p2）
++ `kalibr`输出的内参格式为：`fx，fy，cx，cy`畸变参数为：`k1，k2，p1，p2`（径向畸变参数`k1、k2`，切向畸变参数`p1，p2`）
 
-+ ROS标定工具直接输出了内参矩阵K=[fx, 0, cx; 0, fy, cy; 0, 0, 1]
-  畸变参数为[k1, k2, p1, p2, k3]
++ ROS标定工具直接输出了内参矩阵`K=[fx, 0, cx; 0, fy, cy; 0, 0, 1]`
+  畸变参数为`[k1, k2, p1, p2, k3]`
 
-+ OpenCV与ROS标定的畸变参数格式相同,采用的是五位畸变参数
++ `OpenCV`与`ROS`标定的畸变参数格式相同,采用的是五位畸变参数
 
-与ROS标定的畸变参数格式相同。但是径向畸变的参数k1、k2、k3当中，k3的影响较小，ROS标定工具的输出中k3均为0，
-所以在利用Kalibr标定后，直接在畸变参数中最后一位加0变成五位即可调用OpenCV校正。
+与`ROS`标定的畸变参数格式相同。但是径向畸变的参数`k1、k2、k3`当中，`k3`的影响较小，`ROS`标定工具的输出中`k3`均为`0`.
+所以在利用`Kalibr`标定后，直接在畸变参数中最后一位加`0`变成五位即可调用`OpenCV`校正。
 
 
 ## 2.1 `camera_calibration_py`
 
-1. env
+1. `env`
 ~~~python
 apt get install python3-pip
 pip install opencv-python==4.7.0.72 numpy==1.23.0
@@ -111,7 +112,7 @@ python stereo_calibration.py
 
 ---
 
-## 2.2 ros工具包camera_calibration
+## 2.2 `ros`工具包`camera_calibration`
 
 ### 2.2.1 单目标定
 
@@ -122,9 +123,9 @@ sudo apt install python3-catkin-tools
 ~~~
 
 
-2. 只讲usb启动相机.下载usb相机
+2. 只讲`usb`启动相机.下载`usb`相机
 
-+ 其他相机一样,只需要提供camera_info与image话题
++ 其他相机一样,只需要提供`camera_info`与`image`话题
 
 
 ~~~python
@@ -134,12 +135,12 @@ cd ..
 catkin_make -DCATKIN_WHITELIST_PACKAGES="usb_cam"
 ~~~
 
-3. 启动usb_cam
+3. 启动`usb_cam`
 ~~~python
 roslaunch usb_cam usb_cam-test.launch
 ~~~
 
-4. 下载camera_calibration
+4. 下载`camera_calibration`
 
 [image_pipeline](https://github.com/ros-perception/image_pipeline)该功能包里面的`camera_calibration`包行ros官方提供的单目，双目在线标定
 
@@ -171,15 +172,15 @@ camera:=/usb_cam/camera_info  # 相机话题名字
 
 5. 启动上面代码后如图所示：
 
-可以选择camera type ：针孔和鱼眼
+可以选择`camera type` ：针孔和鱼眼
 
-右边有3个按钮，刚开始无法点击(灰色），
+右边有`3`个按钮，刚开始无法点击（灰色），
 
 需要检测到棋盘格，并收集45张图片，可以再终端查看进程
 
-45张收集完成了，就可以点击calibrate(绿色)了
+`45`张收集完成了，就可以点击`calibrate`(绿色)了
 
-开始标定，会卡一会，等待计算，完成后save按钮变绿色，点击，
+开始标定，会卡一会，等待计算，完成后`save`按钮变绿色，点击，
 
 + 结果保存到`/tmp/calibrationdata.tar.gz`
 
@@ -188,42 +189,42 @@ camera:=/usb_cam/camera_info  # 相机话题名字
 
 ### 2.2.2 [双目标定](http://wiki.ros.org/camera_calibration/Tutorials/StereoCalibration)
 
-修改对面的话题名字，size和square,一般采用ros包发布数据
+修改对面的话题名字，`size`和`square`,一般采用`ros`包发布数据
 
---approximate 选项允许相机校准器处理不具有完全相同时间戳的图像,当前设置为 0.1 秒。
+--`approximate` 选项允许相机校准器处理不具有完全相同时间戳的图像,当前设置为 `0.1` 秒。
 
-在这种情况下，只要时间戳差异小于 0.1 秒，校准器就可以正常运行
+在这种情况下，只要时间戳差异小于 `0.1` 秒，校准器就可以正常运行
 
 ~~~python
 rosrun camera_calibration cameracalibrator.py --approximate 0.1 --size 8x6 --square 0.108 right:=/my_stereo/right/image_raw left:=/my_stereo/left/image_raw left_camera:=/my_stereo/left right_camera:=/my_stereo/right
 ~~~
 
-侧边栏将显示棋盘正方形的测量精度和尺寸,epi精度(单位像素)0.16,dim为尺寸
+侧边栏将显示棋盘正方形的测量精度和尺寸,`epi`精度(单位像素)`0.16`,`dim`为尺寸
 
 ![](Thirdparty/img/3.png)
 
 
-通常，低于 0.25 像素的对极误差被认为是可以接受的，低于 0.1 的极佳。
+通常，低于 `0.25` 像素的对极误差被认为是可以接受的，低于 `0.1` 的极佳。
 
 ---
 
-# 3 kalibr标定相机
+# 3 `kalibr`标定相机
 
 [csdn参考链接](https://blog.csdn.net/qq_34570910/article/details/103566490)
 [官方教程不同ubuntu下安装教程](https://github.com/ethz-asl/kalibr/wiki/installation)
 
-## 3.1 录制ros包
+## 3.1 录制`ros`包
 
-使用kalibr一般先录制ros包后，离线标定
+使用`kalibr`一般先录制`ros`包后，离线标定
 
 [官方提供数据包](https://github.com/ethz-asl/kalibr/wiki/downloads)
 
-+ kalibr在处理标定数据的时候要求**频率不能太高**，一般为4Hz，我们可以使用如下命令来更改topic的频率
++ `kalibr`在处理标定数据的时候要求**频率不能太高**，一般为`4Hz`，我们可以使用如下命令来更改`topic`的频率
 
-+ kalibr经常出现标定失败的情况，主要原因在于移动标定板太快，需要**稳定在一定距离、缓慢移动**
++ `kalibr`经常出现标定失败的情况，主要原因在于移动标定板太快，需要**稳定在一定距离、缓慢移动**
 
 
-1. 改变topic频率
+1. 改变`topic`频率
 
 ~~~python
 # rosrun topic_tools throttle messages 输入话题 频率 输出话题
@@ -234,24 +235,24 @@ rosrun topic_tools throttle messages <intopic> <msgs_per_sec> [outtopic]
 rosrun topic_tools throttle messages /camera/color/image_raw 4.0 /outtopic
 ~~~
 
-2. 录制topic
+2. 录制`topic`
 
-测试采用[官方提供数据包](https://github.com/ethz-asl/kalibr/wiki/downloads),实际可以采用rosbag录制数据包
+测试采用[官方提供数据包](https://github.com/ethz-asl/kalibr/wiki/downloads),实际可以采用`rosbag`录制数据包
 
 ~~~python
 rosbag record -O multicameras_calibration /infra_left /infra_right /color
 ~~~
 
-## 3.2 env依赖
+## 3.2 `env`依赖
 
-1. 下载编译kalibr的依赖
+1. 下载编译`kalibr`的依赖
 
-+ 参考**kalibr**目录下**Dockerfile_ros1_20_04**文件
++ 参考 **`kalibr`** 目录下 **`Dockerfile_ros1_20_04`** 文件
 
-+ 18.04与16.04都可以参考Dockerfile_ros1*文件
++ `18.04`与`16.04`都可以参考`Dockerfile_ros1`文件
 + `libopencv-dev ,libeigen3-dev`两个依赖是源码编译得这里就不安装了
 
-+ Ubuntu 20.04
++ `Ubuntu 20.04`
 ~~~python
 sudo apt-get install -y git wget autoconf automake python3-dev python3-pip python3-scipy python3-matplotlib ipython3 python3-wxgtk4.0 python3-tk python3-igraph libboost-all-dev libsuitesparse-dev doxygen libpoco-dev libtbb-dev libblas-dev liblapack-dev libv4l-dev python3-catkin-tools python3-osrf-pycommon
 ~~~
@@ -265,9 +266,9 @@ sudo apt-get install -y python3-dev python3-pip python3-scipy python3-matplotlib
 + 编译
 [不同ubuntu下安装教程](https://github.com/ethz-asl/kalibr/wiki/installation)
 
-+ ethz-asl/kalibr.git版本
++ `ethz-asl/kalibr.git`版本
 
-Ubuntu 16.04-Ubuntu 20.04都适用
+`Ubuntu 16.04-Ubuntu 20.04`都适用
 
 ~~~python
 cd ~/kalibr_ws/src
@@ -284,14 +285,14 @@ catkin build kalibr -DCMAKE_BUILD_TYPE=Release -j4
 [标定板github介绍](https://github.com/ethz-asl/kalibr/wiki/calibration-targets)
 
 + 棋盘格常用的,四月格精度高一点
-+ 相机需要距离标定板1-2m，标定板占据视野60%以上,
++ 相机需要距离标定板`1-2m`，标定板占据视野`60%`以上,
 
-由于Aprilgrid能提供序号信息，能够防止姿态计算时出现跳跃的情况。所以建议采用Aprilgrid进行标定
+由于`Aprilgrid`能提供序号信息，能够防止姿态计算时出现跳跃的情况。所以建议采用`Aprilgrid`进行标定
 
 + 标定过程中，标定板不要离开相机视野范围，开始和结束要平稳进行，尽量使标定板出现在视野所有角落。
 
 
-1. 生成标定板pdf 
+1. 生成标定板`pdf`
 + `aprilgrid`四月格
 ~~~python
 rosrun kalibr kalibr_create_target_pdf --type apriltag --nx 6 --ny 6 --tsize 0.088 --tspace 0.3
@@ -333,9 +334,9 @@ rosrun kalibr kalibr_calibrate_cameras --bag camera_calib.bag --topics /cam0/ima
 
 下载`IMU-CAM`数据包
 
-`imu_april.bag`包含左右相机和imu话题
+`imu_april.bag`包含左右相机和`imu`话题
 
-图像的参数：height: 480,width: 752
+图像的参数：`height: 480`,` width: 752`
 
 ~~~python
 rosbag play imu_april.bag
@@ -359,12 +360,12 @@ rosrun kalibr kalibr_calibrate_cameras --target april_6x6.yaml --bag imu_april.b
 rosrun kalibr kalibr_calibrate_cameras --target april_6x6.yaml --bag imu_april.bag --models pinhole-radtan pinhole-radtan --topics /cam0/image_raw /cam1/image_raw --bag-from-to 5 45
 ~~~
 
-### 3.4.3 相机与IMU标定
+### 3.4.3 相机与`IMU`标定
 
 + 录包
 采集数据的起始和结束阶段注意别晃动太大，
 
-如从桌子上拿起或者放下。如果有这样的动作，在标定阶段应该跳过bag数据集的首尾的数据.
+如从桌子上拿起或者放下。如果有这样的动作，在标定阶段应该跳过`bag`数据集的首尾的数据.
 
 采集数据的时候应该给imu各个轴足够的激励，
 
@@ -384,13 +385,13 @@ rosbag record -O stereo_imu_calibra.bag /stereo_left_node/left  /stereo_right_no
 source devel/setup.bash 
 ~~~
 
-+ camera.yaml是由前面的kalibr_calibrate_cameras标定双目得到的
-+ imu.yaml需要根据imu_utils标定结果修改
++ `camera.yaml`是由前面的`kalibr_calibrate_cameras`标定双目得到的
++ `imu.yaml`需要根据`imu_utils`标定结果修改
 ~~~python
 rosrun kalibr kalibr_calibrate_imu_camera --target april.yaml --bag stereo_imu_calibra.bag --bag-from-to 5 50 --cam camera.yaml --imu ium.yaml --imu-models scale-misalignment --timeoffset-padding 0.1
 ~~~
 
-+ camera.yaml文件内容如下:
++ `camera.yaml`文件内容如下:
 ~~~python
 cam0:
   cam_overlaps: [1]
@@ -417,7 +418,7 @@ cam1:
   rostopic: /stereo/right/image_raw
 ~~~
 
-+ imu.yaml文件内容如下
++ `imu.yaml`文件内容如下
 ~~~python
 #Accelerometers
 accelerometer_noise_density: 5.43036e-03   #Noise density (continuous-time)
@@ -447,9 +448,9 @@ update_rate:                 100.0      #Hz (for discretization of the values ab
 --bag-from-to 5 45  # 5-45s的bag数据 ,单位秒
 ~~~
 
-[--models参数官方说明](https://github.com/ethz-asl/kalibr/wiki/supported-models)
+[`--models`参数官方说明](https://github.com/ethz-asl/kalibr/wiki/supported-models)
 
-[--target参数官网说明](https://github.com/ethz-asl/kalibr/wiki/calibration-targets)
+[`--target`参数官网说明](https://github.com/ethz-asl/kalibr/wiki/calibration-targets)
 
 四月格`aprilgrid.yaml`
 ~~~python
@@ -471,20 +472,20 @@ rowSpacingMeters: 0.06      #size of one chessboard square [m]
 colSpacingMeters: 0.06      #size of one chessboard square [m]
 ~~~
 
---bag ros包
+`--bag` `ros`包
 
---topics 话题名,这里是3个话题名字,和--models对应也是3个
+`--topics` 话题名,这里是`3`个话题名字,和`--models`对应也是`3`个
 
 + 校准将产生以下输出：
 
-report-cam-％BAGNAME％.pdf：以PDF格式报告。包含所有用于文档的图。
-results-cam-％BAGNAME％.txt：结果摘要为文本文件。
-camchain-％BAGNAME％.yaml：结果为YAML格式。该文件可用作相机imu校准器的输入。
+`report-cam-％BAGNAME％.pdf`：以`PDF`格式报告。包含所有用于文档的图。
+`results-cam-％BAGNAME％.txt`：结果摘要为文本文件。
+`camchain-％BAGNAME％.yaml`：结果为`YAML`格式。该文件可用作相机`imu`校准器的输入。
 
 包含：
-1.相机的重投影误差，IMU的误差（加速度和陀螺仪）可以作为先验误差来影响数据融合的定权问题
-2.相机和IMU各自的标定参数，2个.yaml文件给的
-3.IMU与相机之间的相对位姿标定（正反旋转矩阵）cam1 to imu0也有
+1.相机的重投影误差，`IMU`的误差（加速度和陀螺仪）可以作为先验误差来影响数据融合的定权问题
+2.相机和`IMU`各自的标定参数，`2`个`.yaml`文件给的
+3.`IMU`与相机之间的相对位姿标定（正反旋转矩阵）`cam1 to imu0`也有
 
 ~~~python
 T_ci:  (imu0 to cam0): 
@@ -499,7 +500,7 @@ T_ic:  (cam0 to imu0):
  [-0.00062288  0.00048881  0.99999969  0.00381973]
  [ 0.          0.          0.          1.        ]]
 
-相机之间的位姿变换标定（基线baseline）：
+# 相机之间的位姿变换标定（基线）：
 Baseline (cam0 to cam1): 
 [[ 0.99999877  0.00118911 -0.00102243 -0.1101676 ]
  [-0.00118838  0.99999904  0.00071255 -0.00032166]
@@ -509,24 +510,24 @@ baseline norm:  0.110168134052 [m]
 ~~~
 
 
-# 4 IMU
+# 4 `IMU`
 
-这里只标定IMU的噪声noise和偏置bias
+这里只标定IMU的噪声`noise`和偏置`bias`
 
-+  imu_utils校准IMU的噪声密度和随机游走噪声
++ `imu_utils`校准`IMU`的噪声密度和随机游走噪声
 
-+ imu与相机联合标定参考calibr功能包
-+ imu与雷达联合标定参考lidar_align功能包
++ `imu`与相机联合标定参考`calibr`功能包
++ `imu`与雷达联合标定参考`lidar_align`功能包
 
 1. 依赖和编译
 
-+ ros与ceres参考其他章节
++ `ros`与`ceres`参考其他章节
 
 ~~~python
 sudo apt-get install libdw-dev
 ~~~
 
-+ code_utils
++ `code_utils`
 ~~~python
 cd imu_ws/src
 git clone https://github.com/gaowenliang/code_utils.git
@@ -534,7 +535,7 @@ cd ..
 catkin build code_utils
 ~~~
 
-+ imu_utils
++ `imu_utils`
 ~~~python
 cd imu_ws/src
 git clone https://github.com/gaowenliang/imu_utils.git
@@ -542,16 +543,16 @@ cd ..
 catkin build imu_utils
 ~~~
 
-2. 录制rosbag
+2. 录制`rosbag`
 
-+ 静止情况下采集IMU的数据，并录制为ROS包，我采集的时间为2小时20分钟
++ 静止情况下采集IMU的数据，并录制为`ROS`包，我采集的时间为`2`小时`20`分钟
 ~~~python
 rosbag record /imu/data -O imu_xsens.bag
 ~~~
 
 3. 运行
 
-+ 标定 配置xsens.launch文件为如下内容：(指定IMU的topic)
++ 标定 配置`xsens.launch`文件为如下内容：(指定`IMU`的`topic`)
 ~~~yaml
 <launch>
     <node pkg="imu_utils" type="imu_an" name="imu_an" output="screen">
@@ -564,7 +565,7 @@ rosbag record /imu/data -O imu_xsens.bag
 </launch>
 ~~~
 
-这里有一个max_time_min表示使用bag数据的最大时长，单位是分钟，默认是120分钟，
+这里有一个`max_time_min`表示使用`bag`数据的最大时长，单位是分钟，默认是`120`分钟，
 
 + 启动和播包
 ~~~python
@@ -572,23 +573,23 @@ roslaunch imu_utils xsens.launch
 rosbag play -r 200 imu_xsens.bag
 ~~~
 
-`imu_utils/data`这个文件夹下会出现一系列的data文件，
+`imu_utils/data`这个文件夹下会出现一系列的`data`文件，
 打开`xsens_imu_param.yaml`这个文件，会看到计算出来的噪声和随机游走的系数值。
 
 
-# 5 lidar
+# 5 `lidar`
 
-## 5.1 imu2liadr
+## 5.1 `imu2liadr`
 
-+ 标定imu与激光点云的外参用lidar_align
++ 标定`imu`与激光点云的外参用`lidar_align`
 
 1. 依赖
-+ libnlopt-dev
++ `libnlopt-dev`
 ~~~python
 sudo apt-get install libnlopt-dev
 ~~~
 
-+ 安装ceres-1.14.0
++ 安装`ceres-1.14.0`
 
 ~~~python
 sudo apt-get install -y liblapack-dev libsuitesparse-dev libcxsparse3 libgflags-dev libgoogle-glog-dev libgtest-dev libeigen3-dev
@@ -603,7 +604,7 @@ cmake .. && make -j
 
 
 这个工具包原本是用来标定激光雷达和里程计的，
-所以需要改写IMU接口以替换里程计接口，本工程已改好
+所以需要改写`IMU`接口以替换里程计接口，本工程已改好
 
 2. 启动标定程序
 
@@ -613,12 +614,12 @@ source devel/setup.bash
 roslaunch lidar_align lidar_align.launch
 ~~~
 
-计算完成后，在程序包的results文件夹里会出现一个.txt文件和一个.ply文件。
+计算完成后，在程序包的`results`文件夹里会出现一个`.txt`文件和一个`.ply`文件。
 
-打开.txt文件查看标定结果，主要是变化矩阵，变化向量和四元数。
+打开`.txt`文件查看标定结果，主要是变化矩阵，变化向量和四元数。
 
 
-##  5.2 lidar2camera
+##  5.2 `lidar2camera`
 
 + 激光与相机的联合标定
 
@@ -628,12 +629,12 @@ roslaunch lidar_align lidar_align.launch
 wget http://fishros.com/install -O fishros && . fishros
 ~~~
 
-+ opencv和pcl直接用ros里面的,如果安装完ros后未找到opencv与pcl,执行
++ `opencv`和`pcl`直接用`ros`里面的,如果安装完`ros`后未找到`opencv`与`pcl`,执行
 ~~~python
 sudo apt install libopencv-dev libpcl-dev
 ~~~
 
-+ ros功能包依赖,请自行安装
++ `ros`功能包依赖,请自行安装
 ~~~python
 cv_bridge dynamic_reconfigure message_filters pcl_conversions pcl_ros roscpp rospy sensor_msgs
 ~~~
@@ -651,7 +652,7 @@ catkin_make -DCATKIN_WHITELIST_PACKAGES="lidar2cam_calibration"
 
 修改`cfg/params.yaml`的参数,基本都有注释
 
-+ 主要修改ArUco marker:相关的参数
++ 主要修改`ArUco marker:`相关的参数
 
 
 3. 采集数据
@@ -660,14 +661,14 @@ catkin_make -DCATKIN_WHITELIST_PACKAGES="lidar2cam_calibration"
 roslaunch lidar2cam_calibration data_frame_extraction_node.launch
 ~~~
 
-启动后,在rqt_reconfigure窗口下，调整x,y,z点云直通滤波的值
+启动后,在`rqt_reconfigure`窗口下，调整`x,y,z`点云直通滤波的值
 
-当激光点云只剩标定板时,移动鼠标到图像view窗口,按s键进行数据采集
+当激光点云只剩标定板时,移动鼠标到图像`view`窗口,按`s`键进行数据采集
 
-尽可能多的采集数据,调整标定板位置,继续采集,建议采集10组以上不同的位姿的数据。
+尽可能多的采集数据,调整标定板位置,继续采集,建议采集`10`组以上不同的位姿的数据。
 
 
-4. 求解Tcl
+4. 求解`Tcl`
 ~~~python
 roslaunch lidar2cam_calibration estimation_tf_node.launch
 ~~~
