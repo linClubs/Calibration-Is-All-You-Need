@@ -2,7 +2,7 @@
 # 1 Calibration Is All You Need
 
 ## 1.1 env
-[环境构建详细参考](https://github.com/linClubs/calibration/blob/master/Thirdparty/install.md)
+[环境构建详细参考](https://github.com/linClubs/Calibration-Is-All-You-Need/blob/main/Thirdparty/install.md)
 
 
 1. dependent install
