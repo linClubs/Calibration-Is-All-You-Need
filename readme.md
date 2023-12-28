@@ -16,9 +16,12 @@ This repository contains source code for Multi sensor calibration,including **ca
   <img src="lidar2cam_calibration/data/marker_img/4.png" width="520" height="324" />
 </p>
 
- + 上图中闭环 $A$ 到 $B'$ 的方式就可以有2条，$A$ -> $B$ -> $B'$ 和 $A$ -> $A'$ -> $B'$
+ + 上图中闭环 $A$ 到 $B'$ 的方式就可以有2条
+ 
+$A$ -> $B$ -> $B'$ 和 $A$ -> $A'$ -> $B'$
 
-$$\begin{align*}
+$$
+\begin{align*}
   &T_{AB'} = T_{AA'} · T_{A'B'} = T_{AB} · T_{BB'} \\
   &∵ T_{A'B'} = T_{AB}  \\
   &∴ T_{AA'} · T_{AB} = T_{AB} · T_{BB'} 
@@ -36,19 +39,18 @@ $$
 
 $$
 \begin{align*}
-
 &R_A ·R_x =R_xR_B \quad  \quad \   \quad  \quad     (1)\\ 
 &R_A ·t_x + t_A =R_xt_B + t_x   \quad  (2)
 \end{align*}
 $$
 
-先求解$(1)$式，利用+ 由SO3的[伴随性质](https://v1otusc.github.io/2020/07/08/SO(3)-%E7%9A%84%E4%BC%B4%E9%9A%8F%E6%80%A7%E8%B4%A8/), 可以化简得：
+先求解(1)式，利用+ 由SO3的[伴随性质](https://v1otusc.github.io/2020/07/08/SO(3)-%E7%9A%84%E4%BC%B4%E9%9A%8F%E6%80%A7%E8%B4%A8/), 可以化简得：
 
 $$
 a = R_xb  \quad \quad \ \quad \quad \quad (3)
 $$
 
-$a$ 代表 $A$ 对应so3, $b$代表$B$对应so3。
+$a$ 代表 $A$ 对应so3, $b$代表 $B$ 对应so3。
 
 + 个人理解：
 
