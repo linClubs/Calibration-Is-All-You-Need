@@ -112,6 +112,7 @@ $$
 
 
 化简：
+
 $$
 \begin{gather}
 c=\sum_{i=1}^N(n_i^c-R_{cl}n_i^l)^\top(n_i^c-R_{cl}n_i^l) \\
