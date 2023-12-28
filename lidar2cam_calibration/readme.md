@@ -86,14 +86,14 @@ $$
 
 **该方法求解的旋转矩阵能自然地满足旋转矩阵的性质**
 
-$${R}^{\top} {R}={I}, {det}({R})=1$$ ：
+${R}^{\top} {R}={I}, {det}({R})=1$ ：
 
 求解公式如下：
 
 $$
 \begin{aligned}
-\mathbf{R}_{c l} \mathbf{n}^l & =\mathbf{n}^c \quad(1) \\
-\mathbf{n}^{c \top}\left(\mathbf{R}_{c l} \mathbf{P}^l+\mathbf{t}_{c l}\right)+d^c & =0 \quad \ \ (2)
+{R}_{c l} {n}^l & ={n}^c \quad(1) \\
+{n}^{c \top}\left({R}_{c l} {P}^l+{t}_{c l}\right)+d^c & =0 \quad \ \ (2)
 \end{aligned}
 $$
 
@@ -103,50 +103,50 @@ $$
 当激光帧数 $N$ 大于等于 2 时, 可以求解如下**非线性最小二乘问题**来计算旋转矩阵:
 
 $$
-C=\sum_{i=1}^N\left\|\mathbf{n}_i^c-\mathbf{R}_{c l} \mathbf{n}_i^l\right\|^2
+C=\sum_{i=1}^N\left\|{n}_i^c-{R}_{c l} {n}_i^l\right\|^2
 $$
 
 化简：
 
 $$
 \begin{aligned}
-C & =\sum_{i=1}^N\left(\mathbf{n}_i^c-\mathbf{R}_{c l} \mathbf{n}_i^l\right)^{\top}\left(\mathbf{n}_i^c-\mathbf{R}_{c l} \mathbf{n}_i^l\right) \\
-& =\sum_{i=1}^N\left(\mathbf{n}_i^{c \top} \mathbf{n}_i^c+\mathbf{n}_i^{l \top} \mathbf{n}_i^l-2 \mathbf{n}_i^{c \top} \mathbf{R}_{c l} \mathbf{n}_i^l\right)
+C & =\sum_{i=1}^N\left({n}_i^c-{R}_{c l} {n}_i^l\right)^{\top}\left({n}_i^c-{R}_{c l} {n}_i^l\right) \\
+& =\sum_{i=1}^N\left({n}_i^{c \top} {n}_i^c+{n}_i^{l \top} {n}_i^l-2 {n}_i^{c \top} {R}_{c l} {n}_i^l\right)
 \end{aligned}
 $$
 
 因此, **最小化损失函数 C 转化成最大化**(因为是减去 
- $2\mathbf{n}_i^{c \top} \mathbf{R}_{c l} \mathbf{n}_i^l$ ):
+ $2{n}_i^{c \top} {R}_{c l} {n}_i^l$ ):
 
 $$
 \begin{aligned}
-F & =\sum_{i=1}^N \mathbf{n}_i^{c \top} \mathbf{R}_{c l} \mathbf{n}_i^l \\
-& =\operatorname{Trace}\left(\sum_{i=1}^N \mathbf{R}_{c l} \mathbf{n}_i^l \mathbf{n}_i^{c \top}\right)=\operatorname{Trace}(\mathbf{R H})
+F & =\sum_{i=1}^N {n}_i^{c \top} {R}_{c l} {n}_i^l \\
+& =\operatorname{Trace}\left(\sum_{i=1}^N {R}_{c l} {n}_i^l {n}_i^{c \top}\right)=\operatorname{Trace}({R H})
 \end{aligned}
 $$
 
 其中, 跟 2D 激光求解时一样, 引入一个中间矩阵:
 
 $$
-\mathbf{H}=\sum_{i=1}^N \mathbf{n}_i^l \mathbf{n}_i^{c \top}
+{H}=\sum_{i=1}^N {n}_i^l {n}_i^{c \top}
 $$
 
 为了求解过程清晰, 先不加证明地引入一个引理（后续证明）, 对于任意的正定矩阵 $\mathrm{AA}^{\top}$ 以及任意的正交矩阵$B$, 下面的不等式成立:
 
 $$
-\operatorname{Trace}\left(\mathbf{A A}^{\top}\right) \geq \operatorname{Trace}\left(\mathbf{B A A} \mathbf{A}^{\top}\right)
+\operatorname{Trace}\left({A A}^{\top}\right) \geq \operatorname{Trace}\left({B A A} {A}^{\top}\right)
 $$
 
 对矩阵 $H$ 进行$SVD$分解得到
 
 $$
-\mathbf{H}=\mathbf{U} \boldsymbol{\Lambda} \mathbf{V}^{\top}
+{H}={U} \boldsymbol{\Lambda} {V}^{\top}
 $$
 
 即：
 
 $$
-\mathbf{R_{cl}}=\mathbf{V} \mathbf{U}^{\top}
+{R_{cl}}={V} {U}^{\top}
 $$
 
 已知 ${R_{cl}}$ 求解平移向量 ${t_{cl}}$ ，这时候(2)式求解只涉及到平移 ${t_{cl}}$ ，是个线性最小二乘问题 $A{t_{cl}} = b$ 
