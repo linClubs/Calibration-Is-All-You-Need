@@ -92,8 +92,8 @@ ${R}^{\top} {R}={I}, {det}({R})=1$ ：
 
 $$
 \begin{gather}
-{R}_{c l} {n}^l & ={n}^c \quad(1) \\
-{n}^{c \top}\left({R}_{c l} {P}^l+{t}_{c l}\right)+d^c & =0 \quad \ \ (2)
+{R}_{cl} n^l & =n^c \quad(1) \\
+n^{c \top}(R_{c l} P^l+t_{c l})+d^c & =0 \quad \ \ (2)
 \end{gather}
 $$
 
