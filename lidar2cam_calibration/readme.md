@@ -11,7 +11,7 @@
 
 [视频标定效果链接](https://www.bilibili.com/video/BV1g24y1W7Td/#reply153517451632)
 
-**总结：大佬们代码跑不通，只有笨比操作手撸^_^**
+**总结：笨比才手撸^_^**
 
 
 **默认已经完成相机内参标定**
@@ -91,10 +91,10 @@ ${R}^{\top} {R}={I}, {det}({R})=1$ ：
 求解公式如下：
 
 $$
-\begin{aligned}
+\begin{gather}
 {R}_{c l} {n}^l & ={n}^c \quad(1) \\
 {n}^{c \top}\left({R}_{c l} {P}^l+{t}_{c l}\right)+d^c & =0 \quad \ \ (2)
-\end{aligned}
+\end{gather}
 $$
 
 + 先根据 $(1)$ 式求旋转 $R$ ，然后根(2)式求平移 $t$ , 简化参数估计。
@@ -103,25 +103,27 @@ $$
 当激光帧数 $N$ 大于等于 2 时, 可以求解如下**非线性最小二乘问题**来计算旋转矩阵:
 
 $$
+\begin{gather}
 C=\sum_{i=1}^N\left\|{n}_i^c-{R}_{c l} {n}_i^l\right\|^2
+\end{gather}
 $$
 
 化简：
 
 $$
-\begin{aligned}
+\begin{gather}
 C & =\sum_{i=1}^N\left({n}_i^c-{R}_{c l} {n}_i^l\right)^{\top}\left({n}_i^c-{R}_{c l} {n}_i^l\right) \\
 & =\sum_{i=1}^N\left({n}_i^{c \top} {n}_i^c+{n}_i^{l \top} {n}_i^l-2 {n}_i^{c \top} {R}_{c l} {n}_i^l\right)
-\end{aligned}
+\end{gather}
 $$
 
 因此, **最小化损失函数 C 转化成最大化**(因为是减去 
  $2{n}_i^{c \top} {R}_{c l} {n}_i^l$ ):
 
-$$\begin{aligned}
+$$\begin{gather}
 F & =\sum_{i=1}^N {n}_i^{c \top} {R}_{c l} {n}_i^l \\
 & ={Trace}\left(\sum_{i=1}^N {R}_{c l} {n}_i^l {n}_i^{c \top}\right)={Trace}({R H})
-\end{aligned}$$
+\end{gather}$$
 
 其中, 跟 2D 激光求解时一样, 引入一个中间矩阵:
 
