@@ -90,11 +90,12 @@ ${R}^{\top} {R}={I}, {det}({R})=1$ ：
 
 求解公式如下：
 
-$$\begin{gathered}
-{R}_{cl} n^l & =n^c \quad(1) \\
-n^{c \top}(R_{c l} P^l+t_{c l})+d^c & =0 \quad \ \ (2)
-\end{gathered}$$
-
+$$
+\begin{gather}
+R_{cl}n^l = n^c  \quad \quad \quad\quad\quad\quad\quad(1) \\
+n^{c\top}(R_{cl}P^l + t_{cl}) + d^c =0 \quad (2)
+\end{gather}
+$$
 
 
 
