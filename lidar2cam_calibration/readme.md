@@ -102,13 +102,13 @@ n^{c \top}(R_{c l} P^l+t_{c l})+d^c & =0 \quad \ \ (2)
 
 
 当激光帧数 $N$ 大于等于 2 时, 可以求解, 如下**非线性最小二乘问题**来计算旋转矩阵:
- 
-$${
-\begin{gathered} 
-C=\sum_{i=1}^N\left\|{n}_i^c-{R}_{c l} 
- {n}_i^l\right\|^2 
-\end{gathered} 
-}$$
+
+$$
+\begin{gathered}
+C=\sum_{i=1}^N||n_i^c-R_{cl}n_i^l||^2
+\end{gathered}
+$$
+
 
 化简：
 
@@ -135,9 +135,9 @@ $$\begin{gather}
 
 为了求解过程清晰, 先不加证明地引入一个引理（后续证明）, 对于任意的正定矩阵 $\mathrm{AA}^{\top}$ 以及任意的正交矩阵 $B$, 下面的不等式成立:
 
-$$\begin{gather}
+$$\begin{gathered}
 {{Trace}\left({A A}^{\top}\right) \geq {Trace}\left({B A A} {A}^{\top}\right)}
-\end{gather}$$
+\end{gathered}$$
 
 对矩阵 $H$ 进行 ${SVD}$ 分解得到
 
