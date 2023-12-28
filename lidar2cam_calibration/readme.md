@@ -103,9 +103,9 @@ $$
 当激光帧数 $N$ 大于等于 2 时, 可以求解如下**非线性最小二乘问题**来计算旋转矩阵:
 
 $$
-\begin{gather}
+\begin{gather} 
 C=\sum_{i=1}^N\left\|{n}_i^c-{R}_{c l} {n}_i^l\right\|^2
-\end{gather}
+\end{gather} 
 $$
 
 化简：
@@ -113,7 +113,7 @@ $$
 $$
 \begin{gather}
 C & =\sum_{i=1}^N\left({n}_i^c-{R}_{c l} {n}_i^l\right)^{\top}\left({n}_i^c-{R}_{c l} {n}_i^l\right) \\
-& =\sum_{i=1}^N\left({n}_i^{c \top} {n}_i^c+{n}_i^{l \top} {n}_i^l-2 {n}_i^{c \top} {R}_{c l} {n}_i^l\right)
+& =\sum_{i=1}^N\left({n}_i^{c \top} {n}_i^c+{n}_i^{l \top} {n}_i^l-2 {n}_i^{c \top} {R}_{c l} {n}_i^l\right) 
 \end{gather}
 $$
 
@@ -122,7 +122,7 @@ $$
 
 $$\begin{gather}
 F & =\sum_{i=1}^N {n}_i^{c \top} {R}_{c l} {n}_i^l \\
-& ={Trace}\left(\sum_{i=1}^N {R}_{c l} {n}_i^l {n}_i^{c \top}\right)={Trace}({R H})
+& ={Trace}\left(\sum_{i=1}^N {R}_{c l} {n}_i^l {n}_i^{c \top}\right)={Trace}({R H}) 
 \end{gather}$$
 
 其中, 跟 2D 激光求解时一样, 引入一个中间矩阵:
