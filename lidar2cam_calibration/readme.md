@@ -11,23 +11,8 @@
 
 [视频标定效果链接](https://www.bilibili.com/video/BV1g24y1W7Td/#reply153517451632)
 
-**总结：还是本人太菜了,开源代码跑不通，只有笨比操作手撸^_^**
+**总结：大佬们代码跑不通，只有笨比操作手撸^_^**
 
----
-
-# 1 原理
-![](data/marker_img/2.png)
-
-$$
-P_c = TclP_lidar
-$$
-
-标定出雷达到相机坐标系下的变换矩阵Tcl
-
-![](data/marker_img/3.png)
-
-
----
 
 **默认已经完成相机内参标定**
 
@@ -43,6 +28,116 @@ $$
 6. 优化Tcl。
 
 ---
+
+# 1 lidar2cam原理
+
++ 一般有利用标定板，并存在**传感器数据共视关系**, 如下图所示
+
+![](data/marker_img/2.png)
+
+## 1.1 点约束
+
+$$
+P_c = TclP_lidar
+$$
+
+**直接找对应点**, 标定出雷达到相机坐标系下的变换矩阵$T_{cl}$ 
+
++ 常见的求$T_{cl}$做法还是利用**平面约束**
+
+
+## 2.2 **平面约束**
+
+相机系$c$下的平面表示：法向量和一个D表示平面， 4个量表示一个平面
+$$
+\pi^c=\left[\mathrm{n}^c, d\right] \in \mathbb{R}^4
+$$
+
+$c$系外一点$P_c$ 到平面的距离$d$：
+$$
+	\mathrm{n}^c{^T} P_c = d 
+$$
+2个向量的**点乘**，(一向量为单位向量)  结果就是另一向量在该单位向量上的投影
+
+现在将雷达系$p$下的点$P_l$变换到$c$系下$P_c$表示：
+
+$$
+	\mathrm{n}^c{^T}(T_{cl}*P_l) = d 
+$$
+
+**2d和3d激光都可以用平面约束求解T_{cl}**。
+
+1. 2d激光
+
++ 将$T_{cl}$用se3表示。6个未知量。需要6个方程求解
++ 如果取z=0，$T_{cl}$就能化成9个量求解，$R_{cl}$又是一个带约束的问题
+
+一帧数据，可以得到2个有效约束条件（因为像素只有$uv$两维）。所以解6个未知数至少需要3对数据。
+
+2. 3d激光
+
+点云也有平面(法向量)，相机也有平面(法向量)。就可以再够成一个约束条件， 但实际一般的做法：
+
+**该方法求解的旋转矩阵能自然地满足旋转矩阵的性质**$\mathbf{R}^{\top} \mathbf{R}=\mathrm{I}, \operatorname{det}(\mathrm{R})=1$：
+
+求解公式如下：
+
+$$
+\begin{aligned}
+\mathbf{R}_{c l} \mathbf{n}^l & =\mathbf{n}^c \quad(1) \\
+\mathbf{n}^{c \top}\left(\mathbf{R}_{c l} \mathbf{P}^l+\mathbf{t}_{c l}\right)+d^c & =0 \quad \ \ (2)
+\end{aligned}
+$$
+
++ 先根据$(1)$式求旋转$R$，然后根据2式求平移$t$, 简化参数估计。
+
+
+当激光帧数 $N$ 大于等于 2 时, 可以求解如下**非线性最小二乘问题**来计算旋转矩阵:
+$$
+C=\sum_{i=1}^N\left\|\mathbf{n}_i^c-\mathbf{R}_{c l} \mathbf{n}_i^l\right\|^2
+$$
+化简：
+$$
+\begin{aligned}
+C & =\sum_{i=1}^N\left(\mathbf{n}_i^c-\mathbf{R}_{c l} \mathbf{n}_i^l\right)^{\top}\left(\mathbf{n}_i^c-\mathbf{R}_{c l} \mathbf{n}_i^l\right) \\
+& =\sum_{i=1}^N\left(\mathbf{n}_i^{c \top} \mathbf{n}_i^c+\mathbf{n}_i^{l \top} \mathbf{n}_i^l-2 \mathbf{n}_i^{c \top} \mathbf{R}_{c l} \mathbf{n}_i^l\right)
+\end{aligned}
+$$
+
+因此, **最小化损失函数 C 转化成最大化**(因为是减去$2\mathbf{n}_i^{c \top} \mathbf{R}_{c l} \mathbf{n}_i^l$):
+$$
+\begin{aligned}
+F & =\sum_{i=1}^N \mathbf{n}_i^{c \top} \mathbf{R}_{c l} \mathbf{n}_i^l \\
+& =\operatorname{Trace}\left(\sum_{i=1}^N \mathbf{R}_{c l} \mathbf{n}_i^l \mathbf{n}_i^{c \top}\right)=\operatorname{Trace}(\mathbf{R H})
+\end{aligned}
+$$
+
+其中, 跟 2D 激光求解时一样, 引入一个中间矩阵:
+$$
+\mathbf{H}=\sum_{i=1}^N \mathbf{n}_i^l \mathbf{n}_i^{c \top}
+$$
+为了求解过程清晰, 先不加证明地引入一个引理（后续证明）, 对于任意的正定矩阵 $\mathrm{AA}^{\top}$ 以及任意的正交矩阵$B$, 下面的不等式成立:
+$$
+\operatorname{Trace}\left(\mathbf{A A}^{\top}\right) \geq \operatorname{Trace}\left(\mathbf{B A A} \mathbf{A}^{\top}\right)
+$$
+
+对矩阵 $H$ 进行$SVD$分解得到
+$$
+\mathbf{H}=\mathbf{U} \boldsymbol{\Lambda} \mathbf{V}^{\top}
+$$
+
+即：
+$$
+\mathbf{R_{cl}}=\mathbf{V} \mathbf{U}^{\top}
+$$
+
+已知${R_{cl}}$求解平移向量${t_{cl}}$，这时候(2)式求解只涉及到平移${t_{cl}}$，是个线性最小二乘问题$A{t_{cl}} = b$ 
+ 
+
+
+---
+
+
 
 # 2 准备工作
 
