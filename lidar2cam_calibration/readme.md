@@ -49,13 +49,15 @@ $$
 ## 2.2 **平面约束**
 
 相机系$c$下的平面表示：法向量和一个D表示平面， 4个量表示一个平面
+
 $$
 \pi^c=\left[\mathrm{n}^c, d\right] \in \mathbb{R}^4
 $$
 
 $c$系外一点$P_c$ 到平面的距离$d$：
+
 $$
-\mathrm{n}^c{^T} P_c = d 
+\mathrm {n}^c{^T} P_c = d 
 $$
 
 2个向量的**点乘**，(一向量为单位向量)  结果就是另一向量在该单位向量上的投影
@@ -63,7 +65,7 @@ $$
 现在将雷达系$p$下的点$P_l$变换到$c$系下$P_c$表示：
 
 $$
-\mathrm{n}^c{^T}(T_{cl}*P_l) = d 
+\mathrm {n}^c{^T}(T_{cl}*P_l) = d 
 $$
 
 **2d和3d激光都可以用平面约束求解T_{cl}**。
@@ -94,10 +96,12 @@ $$
 
 
 当激光帧数 $N$ 大于等于 2 时, 可以求解如下**非线性最小二乘问题**来计算旋转矩阵:
+
 $$
 C=\sum_{i=1}^N\left\|\mathbf{n}_i^c-\mathbf{R}_{c l} \mathbf{n}_i^l\right\|^2
 $$
 化简：
+
 $$
 \begin{aligned}
 C & =\sum_{i=1}^N\left(\mathbf{n}_i^c-\mathbf{R}_{c l} \mathbf{n}_i^l\right)^{\top}\left(\mathbf{n}_i^c-\mathbf{R}_{c l} \mathbf{n}_i^l\right) \\
@@ -105,7 +109,8 @@ C & =\sum_{i=1}^N\left(\mathbf{n}_i^c-\mathbf{R}_{c l} \mathbf{n}_i^l\right)^{\t
 \end{aligned}
 $$
 
-因此, **最小化损失函数 C 转化成最大化**(因为是减去$2\mathbf{n}_i^{c \top} \mathbf{R}_{c l} \mathbf{n}_i^l$):
+因此, **最小化损失函数 C 转化成最大化**(因为是减去 $2\mathbf{n}_i^{c \top} \mathbf{R}_{c l} \mathbf{n}_i^l$ ):
+
 $$
 \begin{aligned}
 F & =\sum_{i=1}^N \mathbf{n}_i^{c \top} \mathbf{R}_{c l} \mathbf{n}_i^l \\
@@ -114,25 +119,30 @@ F & =\sum_{i=1}^N \mathbf{n}_i^{c \top} \mathbf{R}_{c l} \mathbf{n}_i^l \\
 $$
 
 其中, 跟 2D 激光求解时一样, 引入一个中间矩阵:
+
 $$
 \mathbf{H}=\sum_{i=1}^N \mathbf{n}_i^l \mathbf{n}_i^{c \top}
 $$
+
 为了求解过程清晰, 先不加证明地引入一个引理（后续证明）, 对于任意的正定矩阵 $\mathrm{AA}^{\top}$ 以及任意的正交矩阵$B$, 下面的不等式成立:
+
 $$
 \operatorname{Trace}\left(\mathbf{A A}^{\top}\right) \geq \operatorname{Trace}\left(\mathbf{B A A} \mathbf{A}^{\top}\right)
 $$
 
 对矩阵 $H$ 进行$SVD$分解得到
+
 $$
 \mathbf{H}=\mathbf{U} \boldsymbol{\Lambda} \mathbf{V}^{\top}
 $$
 
 即：
+
 $$
 \mathbf{R_{cl}}=\mathbf{V} \mathbf{U}^{\top}
 $$
 
-已知${R_{cl}}$求解平移向量${t_{cl}}$，这时候(2)式求解只涉及到平移${t_{cl}}$，是个线性最小二乘问题$A{t_{cl}} = b$ 
+已知 ${R_{cl}}$ 求解平移向量 ${t_{cl}}$ ，这时候(2)式求解只涉及到平移 ${t_{cl}}$ ，是个线性最小二乘问题 $A{t_{cl}} = b$ 
  
 
 
