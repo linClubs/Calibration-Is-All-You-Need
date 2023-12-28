@@ -140,7 +140,7 @@ $$\begin{gather}
 {H}={\sum_{i=1}^N} {n}_i^l {n}_i^{c \top}
 \end{gather}$$
 
-为了求解过程清晰, 先不加证明地引入一个引理（后续证明）, 对于任意的正定矩阵 $\mathrm{AA}^{\top}$ 以及任意的正交矩阵 $B$, 下面的不等式成立:
+对于任意的正定矩阵 $\mathrm{AA}^{\top}$ 以及任意的正交矩阵 $B$, 下面的不等式成立:
 
 $$\begin{gathered}
 {{Trace}\left({A A}^{\top}\right) \geq {Trace}\left({B A A} {A}^{\top}\right)}
