@@ -114,16 +114,15 @@ $$
 化简：
 $$
 \begin{gather}
-C=\sum_{i=1}^N(n_i^c-R_{cl}n_i^l)^\top(n_i^c-R_{cl}n_i^l) \\
-=\sum_{i=1}^N(n_i^{c{\top}}n_i^c +n_i^{l{\top}}n_i^l -2 n_i^{c\top}R_{cl}n_i^l) 
+c=\sum_{i=1}^N(n_i^c-R_{cl}n_i^l)^\top(n_i^c-R_{cl}n_i^l) \\
+=\sum_{i=1}^N(n_i^{c\top}n_i^c + n_i^{l\top}n_i^l-2n_i^{c\top}R_{cl}n_i^l)
 \end{gather}
 $$
 
 
 
 
-因此, **最小化损失函数 C 转化成最大化**(因为是减去 
- $2{n}_i^{c \top} {R}_{c l} {n}_i^l$ ):
+因此, **最小化损失函数 C 转化成最大化**(因为是减去 $2n_i^{c\top}R_{cl}n_i^l$ ):
 
 $$
 \begin{gather}
