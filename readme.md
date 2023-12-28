@@ -1,9 +1,48 @@
 
-# 1 `Calibration Is All You Need`
+#  `Calibration Is All You Need`
  
 This repository contains source code for Multi sensor calibration,including **camera、imu、imu2camera、lidar2cam、camera2camera、imu2lidar**.
 
-## 1.1 `env`
+
+# 0 原理简单介绍
+
+这里只介绍外参标定原理
+
+## 0.1 手眼标定
+
++ 外参标定不得不提手眼标定原理, 如图
+![](lidar2cam_calibrationdata/marker_img/3.png)
+
+ + 闭环 $A$ 到$B'$ 的方式就可以有2条，$A$->$B$->$B'$和$A$->$A'$->$B'$
+  $$\begin{align*}
+  &T_{AB'} = T_{AA'} · T_{A'B'} = T_{AB} · T_{BB'} \\
+  &∵ T_{A'B'} = T_{AB}  \\
+  &∴ T_{AA'} · T_{AB} = T_{AB} · T_{BB'} 
+\end{align*}$$
+  $$
+  \begin{align*}
+  记作：
+  &AX =XB
+  \end{align*}$$
+
+
+
+![](lidar2cam_calibration/data/marker_img/2.png)
+
+$$
+P_c = TclP_lidar
+$$
+
+标定出雷达到相机坐标系下的变换矩阵Tcl
+
+
+
+
+
+
+
+
+## 1 环境配置
 [环境构建详细参考](https://github.com/linClubs/Calibration-Is-All-You-Need/blob/main/Thirdparty/install.md)
 
 
@@ -30,7 +69,7 @@ cd calibration
 ./docker_build.sh
 ~~~
 
-## 1.2 编译`calibration`功能包
+2. 编译`calibration`功能包
 
 + 下载
 ~~~python
