@@ -14,17 +14,20 @@ This repository contains source code for Multi sensor calibration,including **ca
 ![](lidar2cam_calibrationdata/marker_img/3.png)
 
  + 闭环 $A$ 到$B'$ 的方式就可以有2条，$A$->$B$->$B'$和$A$->$A'$->$B'$
-  $$\begin{align*}
+
+$$\begin{align*}
   &T_{AB'} = T_{AA'} · T_{A'B'} = T_{AB} · T_{BB'} \\
   &∵ T_{A'B'} = T_{AB}  \\
   &∴ T_{AA'} · T_{AB} = T_{AB} · T_{BB'} 
-\end{align*}$$
+\end{align*}
+$$
+
   $$
   \begin{align*}
   记作：
   &AX =XB
-  \end{align*}$$
-
+  \end{align*}
+  $$
 
 
 ![](lidar2cam_calibration/data/marker_img/2.png)
