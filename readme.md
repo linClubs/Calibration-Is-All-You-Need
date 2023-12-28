@@ -44,7 +44,7 @@ $$
 \end{align*}
 $$
 
-先求解(1)式，利用+ 由SO3的[伴随性质](https://v1otusc.github.io/2020/07/08/SO(3)-%E7%9A%84%E4%BC%B4%E9%9A%8F%E6%80%A7%E8%B4%A8/), 可以化简得：
+先求解(1)式，利用SO3的[伴随性质](https://v1otusc.github.io/2020/07/08/SO(3)-%E7%9A%84%E4%BC%B4%E9%9A%8F%E6%80%A7%E8%B4%A8/), 可以化简得：
 
 $$
 a = R_xb  \quad \quad \ \quad \quad \quad (3)
