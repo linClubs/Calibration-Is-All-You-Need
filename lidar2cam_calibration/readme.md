@@ -99,7 +99,7 @@ $$
 
 
 
-+ 先根据 $(1)$ 式求旋转 $R$ ，然后根(2)式求平移 $t$ , 简化参数估计。
++ 先根据 $(1)$ 式求旋转 $R$ ，然后由(2)式求平移 $t$ , 简化参数估计。
 
 
 当激光帧数 $N$ 大于等于 2 时, 可以求解, 如下**非线性最小二乘问题**来计算旋转矩阵:
@@ -112,21 +112,27 @@ $$
 
 
 化简：
+$$
+\begin{gather}
+C=\sum_{i=1}^N(n_i^c-R_{cl}n_i^l)^\top(n_i^c-R_{cl}n_i^l) \\
+=\sum_{i=1}^N(n_i^{c{\top}}n_i^c +n_i^{l{\top}}n_i^l -2 n_i^{c\top}R_{cl}n_i^l) 
+\end{gather}
+$$
 
-$${
-\begin{gathered}
-C =\sum_{i=1}^N\left({n}_i^c-{R}_{c l} {n}_i^l\right)^{\top}\left({n}_i^c-{R}_{c l} {n}_i^l\right)  \\
-\quad \quad =\sum_{i=1}^N\left({n}_i^{c \top} {n}_i^c+{n}_i^{l \top} {n}_i^l-2 {n}_i^{c \top} {R}_{c l} {n}_i^l\right) 
-\end{gathered}}$$
+
+
 
 因此, **最小化损失函数 C 转化成最大化**(因为是减去 
  $2{n}_i^{c \top} {R}_{c l} {n}_i^l$ ):
 
-$$\begin{gather}
-F  =\sum_{i=1}^N {n}_i^{c \top} {R}_{c l} {n}_i^l \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
-\\
- ={Trace}\left(\sum_{i=1}^N {R}_{c l} {n}_i^l {n}_i^{c \top}\right)={Trace}({R H}) 
-\end{gather}$$
+$$
+\begin{gather}
+F=\sum_{i=1}^Nn_i^{c\top}R_{cl}n_i^l \\
+=Trace\left(\sum_{i=1}^NR_{cl}n_i^ln_i^{c\top}\right) = Trace(RH)
+\end{gather}
+$$
+
+
 
 其中, 跟 2D 激光求解时一样, 引入一个中间矩阵:
 
