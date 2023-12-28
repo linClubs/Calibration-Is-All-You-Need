@@ -11,8 +11,10 @@ This repository contains source code for Multi sensor calibration,including **ca
 ## 0.1 手眼标定
 
 + 外参标定不得不提手眼标定原理, 如图：
-![](lidar2cam_calibration/data/marker_img/4.png)
 
+<p align="center">
+  <img src="lidar2cam_calibration/data/marker_img/4.png" width="520" height="324" />
+</p>
 
  + 上图中闭环 $A$ 到 $B'$ 的方式就可以有2条，$A$ -> $B$ -> $B'$ 和 $A$ -> $A'$ -> $B'$
 
@@ -23,20 +25,22 @@ $$\begin{align*}
 \end{align*}
 $$
 
-  $$
-  \begin{align*}
-  记作：
-  &AX =XB
-  \end{align*}
-  $$
+$$
+\begin{align*}
+记作：
+&AX =XB
+\end{align*}
+$$
 
-+ 求解$AX =XB$, 将欧式变换矩阵$A、B、X$分解成R和t分开，也就是把方程化简, 得到
-  $$
-  \begin{align*}
++ 求解 $AX =XB$ , 将欧式变换矩阵 $A、B、X$ 分解成R和t分开，也就是把方程化简, 得到
 
-  &R_A ·R_x =R_xR_B \quad  \quad \   \quad  \quad     (1)\\ 
-  &R_A ·t_x + t_A =R_xt_B + t_x   \quad  (2)
-  \end{align*}$$
+$$
+\begin{align*}
+
+&R_A ·R_x =R_xR_B \quad  \quad \   \quad  \quad     (1)\\ 
+&R_A ·t_x + t_A =R_xt_B + t_x   \quad  (2)
+\end{align*}
+$$
 
 先求解$(1)$式，利用+ 由SO3的[伴随性质](https://v1otusc.github.io/2020/07/08/SO(3)-%E7%9A%84%E4%BC%B4%E9%9A%8F%E6%80%A7%E8%B4%A8/), 可以化简得：
 
@@ -44,18 +48,21 @@ $$
 a = R_xb  \quad \quad \ \quad \quad \quad (3)
 $$
 
-$a$代表$A$对应so3, $b$代表$B$对应so3。
+$a$ 代表 $A$ 对应so3, $b$代表$B$对应so3。
 
 + 个人理解：
 
-$a,b$代表旋转向量。**物理意义：**$a$向量旋转$R_x$就能得到向量$b$
+$a,b$ 代表旋转向量。**物理意义：** $a$ 向量旋转 $R_x$ 就能得到向量 $b$
 
 
 ## 0.2 lidar2cam标定原理
 
 + 一般有利用标定板，并存在**传感器数据共视关系**, 如下图所示
 
-![](lidar2cam_calibration/data/marker_img/2.png)
+<p align="center">
+  <img src="lidar2cam_calibration/data/marker_img/2.png" width="540" height="268" />
+</p>
+
 
 1. 点约束
 
@@ -63,31 +70,34 @@ $$
 P_c = TclP_lidar
 $$
 
-**直接找对应点**, 标定出雷达到相机坐标系下的变换矩阵$T_{cl}$ 
+**直接找对应点**, 标定出雷达到相机坐标系下的变换矩阵 $T_{cl}$ 
 
-+ 常见的求$T_{cl}$做法还是利用**平面约束**
++ 常见的求 $T_{cl}$ 做法还是利用**平面约束**
 
 
 2. **平面约束**
 
-相机系$c$下的平面表示：法向量和一个D表示平面， 4个量表示一个平面
+相机系 $c$ 下的平面表示：法向量和一个D表示平面， 4个量表示一个平面
+
 $$
 \pi^c=\left[\mathrm{n}^c, d\right] \in \mathbb{R}^4
 $$
 
-$c$系外一点$P_c$ 到平面的距离$d$：
+$c$ 系外一点 $P_c$ 到平面的距离 $d$ ：
+
 $$
 \mathrm{n}^c{^T} P_c = d 
 $$
+
 2个向量的**点乘**，(一向量为单位向量)  结果就是另一向量在该单位向量上的投影
 
-现在将雷达系$p$下的点$P_l$变换到$c$系下$P_c$表示：
+现在将雷达系 $p$ 下的点 $P_l$ 变换到 $c$ 系下 $P_c$ 表示：
 
 $$
 \mathrm{n}^c{^T}(T_{cl}*P_l) = d 
 $$
 
-**2d和3d激光都可以用平面约束求解T_{cl}**。
+**2d和3d激光都可以用平面约束求解 $T_{cl}$**。
 
 [平面约束详细求解方法链接](https://github.com/linClubs/Calibration-Is-All-You-Need/blob/main/lidar2cam_calibration/readme.md)
 
