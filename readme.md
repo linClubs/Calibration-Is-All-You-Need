@@ -39,8 +39,8 @@ $$
 
 $$
 \begin{align*}
-&R_A ·R_x =R_xR_B \quad  \quad \   \quad  \quad     (1)\\ 
-&R_A ·t_x + t_A =R_xt_B + t_x   \quad  (2)
+&R_AR_x =R_xR_B \quad  \quad \   \quad  \quad     (1)\\ 
+&R_At_x + t_A =R_xt_B + t_x   \quad  (2)
 \end{align*}
 $$
 
