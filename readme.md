@@ -16,6 +16,7 @@ This repository contains source code for Multi sensor calibration,including **ca
   <img src="lidar2cam_calibration/data/marker_img/4.png" width="520" height="324" />
 </p>
 
+ + 上图表达了2个不同的传感器(camera和lidar)刚性连接，从t0运动到t1时刻的过程，$A$表示相机运动的姿态，$B$表示lidar运动的姿态，$X$表示cam和lidar的外参
  + 上图中闭环 $A$ 到 $B'$ 的方式就可以有2条
  
 $A$ -> $B$ -> $B'$ 和 $A$ -> $A'$ -> $B'$
